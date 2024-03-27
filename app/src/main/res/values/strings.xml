@@ -8,4 +8,7 @@
     <string name="name">Name</string>
     <string name="sign_up">Sign Up</string>
     <string name="email">Email</string>
+    <string name="log_in">Log In</string>
+    <string name="log_in_here">Log In here</string>
+    <string name="create_a_new_account">Create a new account!</string>
 </resources>
