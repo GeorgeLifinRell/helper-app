@@ -3,7 +3,7 @@ package com.example.helperapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -26,10 +26,10 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mAuth = FirebaseAuth.getInstance();
-        TextView logOutTV = findViewById(R.id.logout_tv);
+        ImageButton logOutBtn = findViewById(R.id.log_out_img_btn);
         startActivity(new Intent(getApplicationContext(), LoginActivity.class));
         finish();
-        logOutTV.setOnClickListener(new View.OnClickListener() {
+        logOutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mAuth.signOut();
