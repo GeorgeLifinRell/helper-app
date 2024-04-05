@@ -4,16 +4,20 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.PopupMenu;
 
 import com.google.firebase.auth.FirebaseAuth;
 
 public class HomeActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
+    private static final int MENU_ITEM_CHANGE_PASSWORD = 1;
+    private static final int MENU_ITEM_VERIFY_EMAIL = 2;
     @Override
     protected void onStart() {
         super.onStart();
@@ -30,14 +34,47 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mAuth = FirebaseAuth.getInstance();
         ImageButton logOutBtn = findViewById(R.id.log_out_img_btn);
-        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-        finish();
+        ImageButton moreProfileMenuBtn = findViewById(R.id.more_profile_options_img_btn);
         logOutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showLogoutConfirmationDialog();
             }
         });
+        moreProfileMenuBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showMoreProfileOptionsMenu(v);
+            }
+        });
+    }
+
+    private void showMoreProfileOptionsMenu(View view) {
+        PopupMenu moreProfileOptionsMenu = new PopupMenu(this, view);
+        moreProfileOptionsMenu.getMenuInflater().inflate(R.menu.menu_profile, moreProfileOptionsMenu.getMenu());
+        moreProfileOptionsMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case MENU_ITEM_CHANGE_PASSWORD:
+                        changeUserPassword();
+                        return true;
+                    case MENU_ITEM_VERIFY_EMAIL:
+                        verifyUserEmailId();
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+        });
+    }
+
+    private void changeUserPassword() {
+        startActivity(new Intent(getApplicationContext(), ChangePasswordActivity.class));
+    }
+
+    private void verifyUserEmailId() {
+        startActivity(new Intent(getApplicationContext(), VerifyEmailActivity.class));
     }
 
     private void showLogoutConfirmationDialog() {
