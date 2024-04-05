@@ -11,7 +11,9 @@ import android.widget.ImageButton;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
+import androidx.cardview.widget.CardView;
 
+import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class HomeActivity extends AppCompatActivity {
@@ -35,6 +37,15 @@ public class HomeActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         ImageButton logOutBtn = findViewById(R.id.log_out_img_btn);
         ImageButton moreProfileMenuBtn = findViewById(R.id.more_profile_options_img_btn);
+
+        MaterialCardView driverSelectionCard = findViewById(R.id.driver_home_card);
+
+        driverSelectionCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), DriverSelectionActivity.class));
+            }
+        });
         logOutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,6 +78,7 @@ public class HomeActivity extends AppCompatActivity {
                 }
             }
         });
+        moreProfileOptionsMenu.show();
     }
 
     private void changeUserPassword() {
@@ -82,7 +94,6 @@ public class HomeActivity extends AppCompatActivity {
         LayoutInflater layoutInflater = getLayoutInflater();
         View logoutConfirmationDialogView = layoutInflater.inflate(R.layout.dialog_logout, null);
         builder.setView(logoutConfirmationDialogView);
-
         builder.setPositiveButton("Stay Back!", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -95,9 +106,12 @@ public class HomeActivity extends AppCompatActivity {
                 logout();
             }
         });
+        builder.create().show();
     }
 
     private void logout() {
         mAuth.signOut();
+        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+        finish();
     }
 }
