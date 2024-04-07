@@ -4,14 +4,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageButton;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-
-import org.w3c.dom.Text;
 
 public class DriverSelectionActivity extends AppCompatActivity {
     TextView hoursNeededValueTV;
@@ -46,18 +40,18 @@ public class DriverSelectionActivity extends AppCompatActivity {
         totalFareValueTV = findViewById(R.id.total_fare_value_tv);
         int hoursNeeded = Integer.parseInt(hoursNeededValueTV.getText().toString());
         hoursNeeded += 1;
-        hoursNeededValueTV.setText(hoursNeeded);
+        hoursNeededValueTV.setText(String.valueOf(hoursNeeded));
         int totalFare = 250 * hoursNeeded;
-        totalFareValueTV.setText(totalFare);
+        totalFareValueTV.setText(String.valueOf(totalFare));
     }
 
     private void decreaseHoursAndUpdateHoursValue() {
         hoursNeededValueTV = findViewById(R.id.hours_needed_value_tv);
         totalFareValueTV = findViewById(R.id.total_fare_value_tv);
         int hoursNeeded = Integer.parseInt(hoursNeededValueTV.getText().toString());
-        hoursNeeded -= 1;
-        hoursNeededValueTV.setText(hoursNeeded);
+        hoursNeeded = (hoursNeeded > 0) ? hoursNeeded - 1 : hoursNeeded;
+        hoursNeededValueTV.setText(String.valueOf(hoursNeeded));
         int totalFare = 250 * hoursNeeded;
-        totalFareValueTV.setText(totalFare);
+        totalFareValueTV.setText(String.valueOf(totalFare));
     }
 }
