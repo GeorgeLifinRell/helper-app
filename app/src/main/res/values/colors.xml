@@ -14,4 +14,6 @@
     <color name="crimson">#DC143C</color>
     <color name="candy_apple_red">#FF0800</color>
     <color name="ruby_red">#E0115F</color>
+    <color name="matte_red">#D85E5E</color>
+    <color name="matte_grey">#D9D9D9</color>
 </resources>
