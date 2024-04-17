@@ -2,7 +2,7 @@
     <string name="app_name">Helper App</string>
     <string name="t_tby_clicking_submit_you_are_accepting_the_terms_and_conditions">\t\tBy clicking submit you are accepting the terms and conditions</string>
     <string name="submit">submit</string>
-    <string name="confirm_password">Confirm Password</string>
+    <string name="confirm_password"> Confirm Password</string>
     <string name="password">Password</string>
     <string name="phone_number">Phone Number</string>
     <string name="name">Name</string>
