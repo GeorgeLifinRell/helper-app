@@ -19,11 +19,9 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center">
-
+            android:layout_height="match_parent">
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/home_toolbar_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:minWidth="100dp"
@@ -44,127 +42,93 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:backgroundTint="@color/white"
-                android:contentDescription="Log out"
+                android:contentDescription="@string/log_out"
                 android:minHeight="48dp"
                 android:src="@drawable/baseline_logout_24"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/more_profile_options_img_btn"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.5" />
-
-            <ImageButton
-                android:id="@+id/more_profile_options_img_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:minHeight="48dp"
-                android:layout_marginEnd="20dp"
-                android:backgroundTint="@color/white"
-                android:src="@drawable/baseline_more_vert_24"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.5" />
+
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.appbar.MaterialToolbar>
 
-    <ScrollView
+    <TextView
+        android:id="@+id/current_location_home_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/bottomAppBar"
+        android:text="Current Location: "
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/home_toolbar"
+        app:layout_constraintBottom_toTopOf="@+id/home_scrollview"/>
+
+    <ScrollView
+        android:id="@+id/home_scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/home_toolbar">
+        app:layout_constraintTop_toBottomOf="@+id/current_location_home_tv">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <GridLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center">
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/driver_home_card"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:minWidth="300dp"
-                android:minHeight="100dp"
-                app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="25dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_chainStyle="spread">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="36dp"
-                    android:src="@drawable/driver_home_icon"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Driver"
-                    android:layout_gravity="center"
-                    android:textSize="24sp"/>
-
-            </com.google.android.material.card.MaterialCardView>
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:minHeight="500dp"
+            android:columnCount="2"
+            android:useDefaultMargins="true">
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/plumber_home_card"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="36dp"
-                android:minWidth="300dp"
-                android:minHeight="100dp"
+                android:minWidth="150dp"
+                android:minHeight="150dp"
                 app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="25dp">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="36dp"
-                    android:src="@drawable/carpenter_home_icon"/>
+                app:cardCornerRadius="25dp"
+                app:layout_constraintBottom_toTopOf="@+id/gardener_home_card"
+                app:layout_constraintEnd_toStartOf="@+id/driver_home_card"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginStart="20dp"
-                    android:text="Carpenter"
-                    android:textSize="24sp" />
+                    android:gravity="center"
+                    android:text="@string/plumber"
+                    android:textSize="24sp"
+                    app:drawableTopCompat="@drawable/plumber_home_icon" />
 
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/gardener_home_card"
+                android:id="@+id/driver_home_card"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="36dp"
-                android:minWidth="300dp"
-                android:minHeight="100dp"
+                android:minWidth="150dp"
+                android:minHeight="150dp"
                 app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="25dp">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="36dp"
-                    android:src="@drawable/electrician_home_icon"/>
+                app:cardCornerRadius="25dp"
+                app:layout_constraintBottom_toTopOf="@+id/electrician_home_card"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/plumber_home_card"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Electrician"
                     android:layout_gravity="center"
-                    android:layout_marginStart="20dp"
-                    android:textSize="24sp"/>
+                    android:text="Driver"
+                    android:textSize="24sp"
+                    app:drawableTopCompat="@drawable/driver_home_icon" />
 
             </com.google.android.material.card.MaterialCardView>
 
@@ -172,29 +136,72 @@
                 android:id="@+id/electrician_home_card"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="36dp"
-                android:minWidth="300dp"
-                android:minHeight="100dp"
+                android:minWidth="150dp"
+                android:minHeight="150dp"
                 app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="25dp">
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="36dp"
-                    android:src="@drawable/plumber_home_icon"/>
+                app:cardCornerRadius="25dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/gardener_home_card"
+                app:layout_constraintTop_toBottomOf="@+id/driver_home_card">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Plumber"
                     android:layout_gravity="center"
-                    android:layout_marginStart="10dp"
-                    android:textSize="24sp"/>
+                    android:text="@string/electrician"
+                    android:textSize="24sp"
+                    app:drawableTopCompat="@drawable/electrician_home_icon" />
 
             </com.google.android.material.card.MaterialCardView>
-        </LinearLayout>
 
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/carpenter_home_card"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="150dp"
+                android:minHeight="150dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="25dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/electrician_home_card"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/plumber_home_card">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/carpenter"
+                    android:textSize="24sp"
+                    app:drawableTopCompat="@drawable/carpenter_home_icon" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/join_genie_home_card"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="150dp"
+                android:minHeight="150dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="25dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/electrician_home_card">
+                <ImageView
+                    android:id="@+id/join_genie_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/join_genie_icon"
+                    android:contentDescription="Join Genie" />
+            </com.google.android.material.card.MaterialCardView>
+        </GridLayout>
     </ScrollView>
 
     <com.google.android.material.bottomappbar.BottomAppBar
@@ -224,8 +231,6 @@
                 android:textSize="18sp"
                 android:textStyle="normal"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/home_home_material_btn"
-                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -239,24 +244,22 @@
                 android:textSize="18sp"
                 android:textStyle="normal"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/home_payments_material_btn"
-                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintEnd_toStartOf="@+id/home_favourites_material_btn"
                 app:layout_constraintStart_toEndOf="@+id/home_history_material_btn"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/home_payments_material_btn"
+                android:id="@+id/home_favourites_material_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
+                android:layout_marginEnd="12dp"
                 android:backgroundTint="@color/matte_red"
                 android:text="Payments"
                 android:textSize="16sp"
                 android:textStyle="normal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/home_home_material_btn"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 

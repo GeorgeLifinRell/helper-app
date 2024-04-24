@@ -18,6 +18,12 @@
         android:theme="@style/Theme.HelperApp"
         tools:targetApi="31">
         <activity
+            android:name=".JoinGenieActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HelperSelectionActivity"
+            android:exported="false" />
+        <activity
             android:name=".VerifyEmailActivity"
             android:exported="false" />
         <activity
@@ -52,7 +58,7 @@
             android:exported="false" />
         <activity
             android:name=".HomeActivity"
-            android:exported="true"/>
+            android:exported="true" />
     </application>
 
 </manifest>

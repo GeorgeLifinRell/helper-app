@@ -57,17 +57,6 @@
                 app:layout_constraintLeft_toRightOf="@id/driver_name_label_tv"
                 app:layout_constraintTop_toBottomOf="@id/driver_image_view" />
 
-            <Button
-                android:id="@+id/expand_driver_card_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:backgroundTint="@color/white"
-                android:drawableTop="@drawable/baseline_keyboard_arrow_down_24"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.984"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/driver_image_view" />
-
             <TextView
                 android:id="@+id/driver_fare_label_tv"
                 android:layout_width="wrap_content"
@@ -75,8 +64,8 @@
                 android:text="Fare per hour: "
                 android:textSize="20sp"
                 android:textStyle="bold"
-                app:layout_constraintTop_toBottomOf="@id/driver_name_label_tv"
-                app:layout_constraintLeft_toLeftOf="parent"/>
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/driver_name_label_tv" />
 
             <TextView
                 android:id="@+id/driver_fare_value_tv"
@@ -86,7 +75,8 @@
                 android:text="Rs.250"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="@+id/driver_fare_label_tv"
-                app:layout_constraintLeft_toRightOf="@id/driver_fare_label_tv" />
+                app:layout_constraintLeft_toRightOf="@id/driver_fare_label_tv"
+                app:layout_constraintTop_toTopOf="@+id/driver_fare_label_tv" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -102,8 +92,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Hours needed:"
+                    android:textSize="20sp"
                     android:textStyle="bold"
-                    android:textSize="20sp"/>
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.appcompat.widget.AppCompatImageButton
                     android:id="@+id/decrease_hours_needed_img_btn"
@@ -140,6 +132,23 @@
                     app:layout_constraintBottom_toBottomOf="@id/hours_needed_label_tv"/>
 
                 <TextView
+                    android:id="@+id/platform_fee_label_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Platform fee (1%): "
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/hours_needed_label_tv"/>
+
+                <TextView
+                    android:id="@+id/platform_fee_value_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="\tfree"
+                    app:layout_constraintStart_toEndOf="@+id/platform_fee_label_tv"
+                    app:layout_constraintTop_toTopOf="@+id/platform_fee_label_tv"
+                    app:layout_constraintBottom_toBottomOf="@+id/platform_fee_label_tv"/>
+
+                <TextView
                     android:id="@+id/total_fare_label_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -147,7 +156,7 @@
                     android:textSize="20sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/hours_needed_label_tv"/>
+                    app:layout_constraintTop_toBottomOf="@+id/platform_fee_label_tv"/>
 
                 <TextView
                     android:id="@+id/total_fare_value_tv"

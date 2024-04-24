@@ -3,8 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/menu_item_change_password"
-        android:title="Change password"/>
+        android:title="Change password"
+        android:icon="@drawable/vertical_key_icon"/>
     <item
         android:id="@+id/menu_item_verify_email"
-        android:title="Verify your email"/>
+        android:title="Verify your email"
+        android:icon="@drawable/email_icon"/>
 </menu>

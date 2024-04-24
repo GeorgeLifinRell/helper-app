@@ -1,20 +1,21 @@
 package com.example.helperapp;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Geocoder;
 import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.LocationRequest;
-import android.Manifest;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -27,13 +28,14 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.Objects;
+
 public class HomeActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
-    private static final int MENU_ITEM_CHANGE_PASSWORD = 1;
-    private static final int MENU_ITEM_VERIFY_EMAIL = 2;
     private static final int LOCATION_REQUEST_CODE = 1001;
     private FusedLocationProviderClient fusedLocationClient;
     private LocationRequest locationRequest;
@@ -69,15 +71,36 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = new MenuInflater(this);
+        menuInflater.inflate(R.menu.menu_profile, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int itemId = item.getItemId();
+
+        if (itemId == R.id.menu_item_change_password) {
+            changeUserPassword();
+        } else if (itemId == R.id.menu_item_verify_email) {
+            verifyUserEmailId();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mAuth = FirebaseAuth.getInstance();
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         getLastKnownLocation();
+        TextView homeToolbarTextView = findViewById(R.id.home_toolbar_textview);
+        homeToolbarTextView.setText(Objects.requireNonNull(mAuth.getCurrentUser()).getDisplayName());
+        MaterialToolbar homeToolbar = findViewById(R.id.home_toolbar);
+        setSupportActionBar(homeToolbar);
         ImageButton logOutBtn = findViewById(R.id.log_out_img_btn);
-        ImageButton moreProfileMenuBtn = findViewById(R.id.more_profile_options_img_btn);
-
         MaterialCardView driverSelectionCard = findViewById(R.id.driver_home_card);
 
         driverSelectionCard.setOnClickListener(new View.OnClickListener() {
@@ -92,33 +115,6 @@ public class HomeActivity extends AppCompatActivity {
                 showLogoutConfirmationDialog();
             }
         });
-        moreProfileMenuBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showMoreProfileOptionsMenu(v);
-            }
-        });
-    }
-
-    private void showMoreProfileOptionsMenu(View view) {
-        PopupMenu moreProfileOptionsMenu = new PopupMenu(this, view);
-        moreProfileOptionsMenu.getMenuInflater().inflate(R.menu.menu_profile, moreProfileOptionsMenu.getMenu());
-        moreProfileOptionsMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case MENU_ITEM_CHANGE_PASSWORD:
-                        changeUserPassword();
-                        return true;
-                    case MENU_ITEM_VERIFY_EMAIL:
-                        verifyUserEmailId();
-                        return true;
-                    default:
-                        return false;
-                }
-            }
-        });
-        moreProfileOptionsMenu.show();
     }
 
     private void changeUserPassword() {
@@ -150,14 +146,8 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void getLastKnownLocation() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
         fusedLocationClient.getLastLocation()
@@ -166,7 +156,7 @@ public class HomeActivity extends AppCompatActivity {
                     public void onSuccess(Location location) {
                         if (location != null) {
                             //TODO: Handle location data here
-
+                            Toast.makeText(HomeActivity.this, location.toString(), Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(HomeActivity.this, "Unable to get location", Toast.LENGTH_SHORT).show();
                         }
