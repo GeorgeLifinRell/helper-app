@@ -4,6 +4,8 @@ import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
+import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
@@ -31,30 +33,30 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 public class HomeActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     private static final int LOCATION_REQUEST_CODE = 1001;
     private FusedLocationProviderClient fusedLocationClient;
-    private LocationRequest locationRequest;
-    private LocationCallback locationCallback;
-    private LocationManager locationManager;
-    private Geocoder geocoder;
+    private TextView currentLocationHomeTV;
 
     @Override
     protected void onStart() {
         super.onStart();
         mAuth = FirebaseAuth.getInstance();
+        currentLocationHomeTV = findViewById(R.id.current_location_home_tv);
         if (mAuth.getCurrentUser() == null) {
             startActivity(new Intent(getApplicationContext(), LoginActivity.class));
             finish();
         }
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST_CODE);
-        } else {
-//            TODO: Handle here
         }
     }
 
@@ -62,9 +64,7 @@ public class HomeActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == LOCATION_REQUEST_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                startLocationUpdates();
-            } else {
+            if (grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(this, "Location permission denied", Toast.LENGTH_SHORT).show();
             }
         }
@@ -95,13 +95,22 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mAuth = FirebaseAuth.getInstance();
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        getLastKnownLocation();
         TextView homeToolbarTextView = findViewById(R.id.home_toolbar_textview);
-        homeToolbarTextView.setText(Objects.requireNonNull(mAuth.getCurrentUser()).getDisplayName());
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+//        if (currentUser != null) {
+//            if (Objects.requireNonNull(currentUser.getDisplayName()).isEmpty()) {
+//                homeToolbarTextView.setText(currentUser.getEmail());
+//            }
+//            else {
+//                homeToolbarTextView.setText(currentUser.getDisplayName());
+//            }
+//        }
+//        homeToolbarTextView.setText(Objects.requireNonNull(mAuth.getCurrentUser()).getDisplayName());
         MaterialToolbar homeToolbar = findViewById(R.id.home_toolbar);
         setSupportActionBar(homeToolbar);
         ImageButton logOutBtn = findViewById(R.id.log_out_img_btn);
         MaterialCardView driverSelectionCard = findViewById(R.id.driver_home_card);
+        getLastKnownLocation();
 
         driverSelectionCard.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -155,13 +164,33 @@ public class HomeActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(Location location) {
                         if (location != null) {
-                            //TODO: Handle location data here
-                            Toast.makeText(HomeActivity.this, location.toString(), Toast.LENGTH_SHORT).show();
+                            String currentLocation = getAddressFromLocation(location);
+                            currentLocationHomeTV.setText(currentLocation);
+                            Toast.makeText(HomeActivity.this, currentLocation, Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(HomeActivity.this, "Unable to get location", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
+    }
+
+    private String getAddressFromLocation(Location location) {
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+        try {
+            List<Address> addresses = geocoder.getFromLocation(
+                    location.getLatitude(),
+                    location.getLongitude(),
+                    1);
+            assert addresses != null;
+            if (!addresses.isEmpty()) {
+                String address = addresses.get(0).getAddressLine(0);
+                Toast.makeText(this, "Current Address: " + address, Toast.LENGTH_SHORT).show();
+                return address;
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return "";
     }
 
     private void logout() {
