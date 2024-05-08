@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/list_item_helper_image"
+        android:layout_width="125dp"
+        android:layout_height="125dp"
+        android:layout_marginVertical="12dp"
+        android:layout_gravity="center_horizontal"
+        android:contentDescription="@string/helper_image"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/list_item_helper_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:textStyle="bold"
+            android:text="Name: "
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <TextView
+            android:id="@+id/list_item_helper_name_value_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:hint="Genie"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/list_item_helper_fare_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:textStyle="bold"
+            android:text="Fare (per hour): "
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+        <TextView
+            android:id="@+id/list_item_helper_fare_value_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:hint="$0 (shh! only for you)"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/list_item_call_helper"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Get Genie"
+        android:layout_gravity="center_horizontal"
+        android:backgroundTint="#F5F5F5"
+        android:textColor="@color/royal_blue"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/list_item_helper_image" />
+
+</LinearLayout>

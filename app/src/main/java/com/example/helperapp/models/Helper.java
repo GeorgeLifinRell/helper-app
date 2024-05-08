@@ -1,15 +1,17 @@
-package com.example.helperapp;
+package com.example.helperapp.models;
 
 public class Helper {
     private String name;
     private String jobTitle;
     private String farePerHour;
+    private String profilePictureURL;
     public Helper () {}
 
-    public Helper(String name, String jobTitle, String farePerHour) {
+    public Helper(String name, String jobTitle, String farePerHour, String profilePictureURL) {
         this.name = name;
         this.jobTitle = jobTitle;
         this.farePerHour = farePerHour;
+        this.profilePictureURL = profilePictureURL;
     }
 
     public String getName() {
@@ -34,5 +36,12 @@ public class Helper {
 
     public void setFarePerHour(String farePerHour) {
         this.farePerHour = farePerHour;
+    }
+    public String getProfilePictureURL() {
+        return profilePictureURL;
+    }
+
+    public void setProfilePictureURL(String profilePictureURL) {
+        this.profilePictureURL = profilePictureURL;
     }
 }

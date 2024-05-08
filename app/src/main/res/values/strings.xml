@@ -18,4 +18,5 @@
     <string name="carpenter">Carpenter</string>
     <string name="electrician">Electrician</string>
     <string name="log_out">Log out</string>
+    <string name="helper_image">helper image</string>
 </resources>

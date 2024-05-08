@@ -15,6 +15,10 @@ public class HelperSelectionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_helper_selection);
 
         FragmentContainerView helperSelectionFragmentContainerView = findViewById(R.id.helper_fragment_container_view);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.main, new DriverSelectionFragment())
+                .commit();
     }
 
     public void replaceFragment(Fragment fragment) {

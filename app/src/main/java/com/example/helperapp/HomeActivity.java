@@ -188,9 +188,9 @@ public class HomeActivity extends AppCompatActivity {
                 return address;
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            return "Exception Thrown";
         }
-        return "";
+        return "Error finding your address!";
     }
 
     private void logout() {

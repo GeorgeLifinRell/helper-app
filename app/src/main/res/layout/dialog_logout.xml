@@ -18,7 +18,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
-        app:lottie_rawRes="@raw/logout_lottie_animation" />
+        app:lottie_rawRes="@raw/logout_lottie_animation"
+        tools:ignore="MissingClass" />
 
     <TextView
         android:id="@+id/textView2"
@@ -27,6 +28,8 @@
         android:text="@string/leaving_us_so_soon"
         android:textColor="@color/royal_blue"
         android:textSize="24sp"
+        android:autoSizeMaxTextSize="26sp"
+        android:autoSizeMinTextSize="24sp"
         app:layout_constraintTop_toBottomOf="@id/logout_lottie_anim_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
