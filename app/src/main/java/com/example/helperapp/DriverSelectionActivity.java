@@ -1,96 +1,78 @@
 package com.example.helperapp;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatImageButton;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.helperapp.adapter.HelperAdapter;
 import com.example.helperapp.models.Helper;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DriverSelectionActivity extends AppCompatActivity {
-    TextView hoursNeededValueTV;
-    TextView totalFareValueTV;
-    TextView platformFeeValueTV;
-    FirebaseFirestore db;
+    private FirebaseFirestore db;
+    private HelperAdapter driverAdapter;
+    private List<Helper> driverList = new ArrayList<>();
+    private RecyclerView driverSelectionRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driver_selection_new);
-        db = FirebaseFirestore.getInstance();
 
-//        AppCompatImageButton decreaseHoursNeededBtn = findViewById(R.id.decrease_hours_needed_img_btn);
-//        AppCompatImageButton increaseHoursNeededBtn = findViewById(R.id.increase_hours_needed_img_btn);
-//        hoursNeededValueTV = findViewById(R.id.hours_needed_value_tv);
-//        totalFareValueTV = findViewById(R.id.total_fare_value_tv);
-//        platformFeeValueTV = findViewById(R.id.platform_fee_value_tv);
-//
-//        decreaseHoursNeededBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                updateHoursValueAndTotalFare(v);
-//            }
-//        });
-//        increaseHoursNeededBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                updateHoursValueAndTotalFare(v);
-//            }
-//        });
-        ListView listView = findViewById(R.id.driver_list_view);
-        List<Helper> driverList = populateDriverListFromDB();
-        HelperAdapter driverAdapter = new HelperAdapter(this, driverList);
-        listView.setAdapter(driverAdapter);
+        driverSelectionRecyclerView = findViewById(R.id.driver_selection_recycler_view);
+        driverSelectionRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        driverAdapter = new HelperAdapter(driverList, new HelperAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Helper driver) {
+                Intent intent = new Intent(DriverSelectionActivity.this, HelperCheckoutActivity.class);
+                intent.putExtra("helper_name", driver.getName());
+                intent.putExtra("job_title", driver.getJobTitle());
+                intent.putExtra("fare_per_hour", driver.getFarePerHour());
+                startActivity(intent);
+            }
+        });
+
+        driverSelectionRecyclerView.setAdapter(driverAdapter);
+        db = FirebaseFirestore.getInstance();
+        fetchDrivers();
     }
 
-//    private void updateHoursValueAndTotalFare(View view) {
-//        hoursNeededValueTV = findViewById(R.id.hours_needed_value_tv);
-//        totalFareValueTV = findViewById(R.id.total_fare_value_tv);
-//        platformFeeValueTV = findViewById(R.id.platform_fee_value_tv);
-//        int hoursNeeded = Integer.parseInt(hoursNeededValueTV.getText().toString());
-//        if (view.getId() == R.id.increase_hours_needed_img_btn) {
-//            hoursNeeded += 1;
-//        } else if (view.getId() == R.id.decrease_hours_needed_img_btn) {
-//            hoursNeeded = (hoursNeeded > 0) ? hoursNeeded - 1 : hoursNeeded;
-//        }
-//        hoursNeededValueTV.setText(String.valueOf(hoursNeeded));
-//        double PLATFORM_FEE = 0.01;
-//        double totalFare = 250 * hoursNeeded * (1 + PLATFORM_FEE);
-//        double platformFee = totalFare - (250 * hoursNeeded);
-//        platformFeeValueTV.setText(String.valueOf(platformFee));
-//        totalFareValueTV.setText(String.valueOf(totalFare));
-//    }
-
-    private List<Helper> populateDriverListFromDB() {
-        List<Helper> helperList = new ArrayList<>();
-        db = FirebaseFirestore.getInstance();
-        db.collection("/helper-list")
-                .whereEqualTo("jobTitle", "driver")
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+    private void fetchDrivers() {
+        db.collection("/helper-profile").whereEqualTo("jobTitle", "driver")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @SuppressLint("NotifyDataSetChanged")
                     @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        for (QueryDocumentSnapshot queryDocumentSnapshot: queryDocumentSnapshots) {
-                            Helper driver = queryDocumentSnapshot.toObject(Helper.class);
-                            helperList.add(driver);
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (error != null) {
+                            Log.e("MainActivity", "Error fetching data", error);
+                            Toast.makeText(DriverSelectionActivity.this, "Error fetching data", Toast.LENGTH_SHORT).show();
+                            return;
                         }
+                        driverList.clear();
+                        assert value != null;
+                        for (DocumentSnapshot document : value.getDocuments()) {
+                            Helper driver = document.toObject(Helper.class);
+                            assert driver != null;
+                            driver.setId(document.getId());
+                            driverList.add(driver);
+                        }
+                        driverAdapter.notifyDataSetChanged();
                     }
-                })
-                .addOnFailureListener(e -> {
-                    Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
-        return helperList;
     }
 }

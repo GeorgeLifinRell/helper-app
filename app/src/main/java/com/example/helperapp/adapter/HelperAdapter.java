@@ -1,63 +1,80 @@
 package com.example.helperapp.adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
-import com.example.helperapp.models.Helper;
 import com.example.helperapp.R;
+import com.example.helperapp.models.Helper;
 
 import java.util.List;
 
-public class HelperAdapter extends BaseAdapter {
+public class HelperAdapter extends RecyclerView.Adapter<HelperAdapter.HelperViewHolder> {
+    private List<Helper> helperList;
+    private OnItemClickListener listener;
 
-    private final Context context;
-    private final List<Helper> helperList;
-
-    public HelperAdapter(Context context, List<Helper> helperList) {
-        this.context = context;
-        this.helperList = helperList;
+    public interface OnItemClickListener {
+        void onItemClick(Helper item);
     }
+
+    public HelperAdapter(List<Helper> helperList, OnItemClickListener listener) {
+        this.helperList = helperList;
+        this.listener = listener;
+    }
+
+    @NonNull
     @Override
-    public int getCount() {
+    public HelperViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_helper, parent, false);
+        return new HelperViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull HelperViewHolder holder, int position) {
+        Helper helper = helperList.get(position);
+        holder.bind(helper, listener);
+    }
+
+    @Override
+    public int getItemCount() {
         return helperList.size();
     }
 
-    @Override
-    public Object getItem(int position) {
-        return helperList.get(position);
-    }
+    public static class HelperViewHolder extends RecyclerView.ViewHolder {
+        ImageView profilePictureIV;
+        TextView helperName;
+        TextView helperFarePerHour;
+        Button helperBookBtn;
 
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        if (convertView == null) {
-            LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = layoutInflater.inflate(R.layout.list_item_helper, parent, false);
+        public HelperViewHolder(@NonNull View itemView) {
+            super(itemView);
+            profilePictureIV = itemView.findViewById(R.id.list_item_helper_image);
+            helperName = itemView.findViewById(R.id.list_item_helper_name_value_tv);
+            helperFarePerHour = itemView.findViewById(R.id.list_item_helper_fare_value_tv);
+            helperBookBtn = itemView.findViewById(R.id.list_item_call_helper);
         }
 
-        ImageView helperImageIV = convertView.findViewById(R.id.list_item_helper_image);
-        TextView helperNameValueTV = convertView.findViewById(R.id.list_item_helper_name_value_tv);
-        TextView helperFarePerHourValueTV = convertView.findViewById(R.id.list_item_helper_fare_value_tv);
+        public void bind(final Helper helper, final OnItemClickListener listener) {
+            helperName.setText(helper.getName());
+            helperFarePerHour.setText(helper.getFarePerHour());
 
-        Helper helper = helperList.get(position);
-        Glide.with(context)
-                .load(helper.getProfilePictureURL())
-                .placeholder(R.drawable.account_circle_icon)
-                .error(R.drawable.genie_splash_img)
-                .into(helperImageIV);
-        helperNameValueTV.setText(helper.getName());
-        helperFarePerHourValueTV.setText(helper.getFarePerHour());
-
-        return convertView;
+            Glide.with(itemView.getContext())
+                    .load(helper.getProfilePictureURL())
+                    .placeholder(R.drawable.driver_home_icon)
+                    .into(profilePictureIV);
+            helperBookBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onItemClick(helper);
+                }
+            });
+        }
     }
 }

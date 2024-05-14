@@ -188,7 +188,7 @@ public class HomeActivity extends AppCompatActivity {
                 return address;
             }
         } catch (IOException e) {
-            return "Exception Thrown";
+            return e.getMessage();
         }
         return "Error finding your address!";
     }
