@@ -40,9 +40,10 @@ public class DriverSelectionActivity extends AppCompatActivity {
             @Override
             public void onItemClick(Helper driver) {
                 Intent intent = new Intent(DriverSelectionActivity.this, HelperCheckoutActivity.class);
-                intent.putExtra("helper_name", driver.getName());
-                intent.putExtra("job_title", driver.getJobTitle());
-                intent.putExtra("fare_per_hour", driver.getFarePerHour());
+                intent.putExtra("helperId", driver.getId());
+                intent.putExtra("helperName", driver.getName());
+                intent.putExtra("jobTitle", driver.getJobTitle());
+                intent.putExtra("helperFarePerHour", driver.getFarePerHour());
                 startActivity(intent);
             }
         });

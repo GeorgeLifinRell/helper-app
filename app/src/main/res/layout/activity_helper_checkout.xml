@@ -7,4 +7,202 @@
     android:layout_height="match_parent"
     tools:context=".HelperCheckoutActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/royal_blue"
+        app:title="Review Genie Details"
+        app:titleTextColor="@color/white"
+        app:titleMarginStart="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        app:cardCornerRadius="50dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="36dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+        <ImageView
+            android:id="@+id/driver_image_view"
+            android:layout_width="200dp"
+            android:layout_height="150dp"
+            android:layout_marginVertical="16dp"
+            android:contentDescription="Driver image"
+            android:src="@drawable/driver_image_1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/driver_name_label_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name: "
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/driver_image_view" />
+
+        <TextView
+            android:id="@+id/genie_name_value_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:hint="Genie"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/driver_name_label_tv"
+            app:layout_constraintLeft_toRightOf="@id/driver_name_label_tv"
+            app:layout_constraintTop_toBottomOf="@id/driver_image_view" />
+
+        <TextView
+            android:id="@+id/driver_fare_label_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fare per hour: "
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/driver_name_label_tv" />
+
+        <TextView
+            android:id="@+id/genie_fare_value_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:hint="$0.00 (❤️)"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/driver_fare_label_tv"
+            app:layout_constraintLeft_toRightOf="@id/driver_fare_label_tv"
+            app:layout_constraintTop_toTopOf="@+id/driver_fare_label_tv" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/driver_fare_label_tv">
+
+
+            <TextView
+                android:id="@+id/hours_needed_label_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hours needed:"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/decrease_hours_needed_img_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
+                android:src="@drawable/baseline_expand_more_24"
+                app:layout_constraintBottom_toBottomOf="@id/hours_needed_label_tv"
+                app:layout_constraintLeft_toRightOf="@id/hours_needed_label_tv"
+                app:layout_constraintTop_toTopOf="@+id/hours_needed_label_tv" />
+
+            <TextView
+                android:id="@+id/genie_hours_needed_value_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:gravity="center"
+                android:hint="0"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/decrease_hours_needed_img_btn"
+                app:layout_constraintStart_toEndOf="@+id/decrease_hours_needed_img_btn"
+                app:layout_constraintTop_toTopOf="@+id/decrease_hours_needed_img_btn" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/increase_hours_needed_img_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
+                android:src="@drawable/baseline_expand_less_24"
+                app:layout_constraintBottom_toBottomOf="@id/hours_needed_label_tv"
+                app:layout_constraintStart_toEndOf="@+id/genie_hours_needed_value_tv"
+                app:layout_constraintTop_toTopOf="@+id/hours_needed_label_tv" />
+
+            <TextView
+                android:id="@+id/platform_fee_label_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Platform fee (5%): "
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/hours_needed_label_tv" />
+
+            <TextView
+                android:id="@+id/genie_platform_fee_value_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="\tfree"
+                app:layout_constraintBottom_toBottomOf="@+id/platform_fee_label_tv"
+                app:layout_constraintStart_toEndOf="@+id/platform_fee_label_tv"
+                app:layout_constraintTop_toTopOf="@+id/platform_fee_label_tv" />
+
+            <TextView
+                android:id="@+id/total_fare_label_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total Cost:"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/platform_fee_label_tv" />
+
+            <TextView
+                android:id="@+id/genie_total_fare_value_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:gravity="center"
+                android:hint="0"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="@+id/total_fare_label_tv"
+                app:layout_constraintLeft_toRightOf="@+id/total_fare_label_tv"
+                app:layout_constraintTop_toTopOf="@id/total_fare_label_tv" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/genie_checkout_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="@color/white"
+                android:text="Book Genie Now!"
+                android:textColor="@color/royal_blue"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/total_fare_label_tv" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
