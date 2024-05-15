@@ -109,7 +109,7 @@ public class HelperCheckoutActivity extends AppCompatActivity {
                 helperBookingDetails.put("userId", currentUserId);
                 helperBookingDetails.put("helperId", helperId);
                 helperBookingDetails.put("jobTitle", jobTitle);
-                helperBookingDetails.put("hoursNeeded", hoursNeededValueTV.toString());
+                helperBookingDetails.put("hoursNeeded", hoursNeededValueTV.getText().toString());
                 helperBookingDetails.put("bookingTimestamp", Instant.now().toString());
                 helperBookingDetails.put("totalFare", totalFareValueTV.getText().toString());
                 helperBookingDetails.put("serviceStatus", GenieStatusCodes.SERVICE_PENDING.toString());
