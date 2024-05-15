@@ -18,6 +18,9 @@
         android:theme="@style/Theme.HelperApp"
         tools:targetApi="31">
         <activity
+            android:name=".HelperCheckoutActivity"
+            android:exported="false" />
+        <activity
             android:name=".JoinGenieActivity"
             android:exported="false" />
         <activity

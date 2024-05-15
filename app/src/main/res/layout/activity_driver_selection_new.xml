@@ -6,12 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".DriverSelectionActivity">
 
-    <ListView
-        android:id="@+id/driver_list_view"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/driver_selection_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
