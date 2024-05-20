@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.helperapp.adapter.HelperAdapter;
 import com.example.helperapp.models.Helper;
+import com.example.helperapp.utils.DividerItemDecoration;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -31,7 +32,7 @@ public class DriverSelectionActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_driver_selection_new);
+        setContentView(R.layout.activity_driver_selection);
 
         driverSelectionRecyclerView = findViewById(R.id.driver_selection_recycler_view);
         driverSelectionRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -49,6 +50,8 @@ public class DriverSelectionActivity extends AppCompatActivity {
         });
 
         driverSelectionRecyclerView.setAdapter(driverAdapter);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, R.drawable.recycler_view_divider);
+        driverSelectionRecyclerView.addItemDecoration(dividerItemDecoration);
         db = FirebaseFirestore.getInstance();
         fetchDrivers();
     }

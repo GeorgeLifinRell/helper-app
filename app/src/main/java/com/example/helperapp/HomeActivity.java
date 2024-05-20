@@ -31,6 +31,7 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -107,6 +108,7 @@ public class HomeActivity extends AppCompatActivity {
 //        }
 //        homeToolbarTextView.setText(Objects.requireNonNull(mAuth.getCurrentUser()).getDisplayName());
         MaterialToolbar homeToolbar = findViewById(R.id.home_toolbar);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navbar);
         setSupportActionBar(homeToolbar);
         ImageButton logOutBtn = findViewById(R.id.log_out_img_btn);
         MaterialCardView driverSelectionCard = findViewById(R.id.driver_home_card);
@@ -122,6 +124,19 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 showLogoutConfirmationDialog();
+            }
+        });
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                if (menuItem.getItemId() == R.id.history_bottom_nav) {
+                    startActivity(new Intent(getApplicationContext(), HistoryActivity.class));
+                } else if (menuItem.getItemId() == R.id.home_bottom_nav) {
+
+                } else if (menuItem.getItemId() == R.id.service_status_bottom_nav) {
+                    startActivity(new Intent(getApplicationContext(), ServiceStatusActivity.class));
+                }
+                return false;
             }
         });
     }
@@ -166,7 +181,6 @@ public class HomeActivity extends AppCompatActivity {
                         if (location != null) {
                             String currentLocation = getAddressFromLocation(location);
                             currentLocationHomeTV.setText(currentLocation);
-                            Toast.makeText(HomeActivity.this, currentLocation, Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(HomeActivity.this, "Unable to get location", Toast.LENGTH_SHORT).show();
                         }
@@ -183,9 +197,7 @@ public class HomeActivity extends AppCompatActivity {
                     1);
             assert addresses != null;
             if (!addresses.isEmpty()) {
-                String address = addresses.get(0).getAddressLine(0);
-                Toast.makeText(this, "Current Address: " + address, Toast.LENGTH_SHORT).show();
-                return address;
+                return addresses.get(0).getAddressLine(0);
             }
         } catch (IOException e) {
             return e.getMessage();

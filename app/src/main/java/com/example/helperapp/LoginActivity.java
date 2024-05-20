@@ -11,6 +11,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.airbnb.lottie.LottieAnimationView;
+import com.example.helperapp.utils.LottieProgressBar;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
@@ -39,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         EditText passwordEt = findViewById(R.id.password_et);
         Button logInBtn = findViewById(R.id.log_in_btn);
         TextView goToSignUpPageBtn = findViewById(R.id.go_to_sign_up_page_tv);
+        LottieProgressBar lottieProgressBar = findViewById(R.id.login_lottie_progress_bar);
 
         goToSignUpPageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,6 +53,8 @@ public class LoginActivity extends AppCompatActivity {
         logInBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                lottieProgressBar.setVisibility(View.VISIBLE);
+                lottieProgressBar.playAnimation();
                 String email = emailEt.getText().toString();
                 String password = passwordEt.getText().toString();
 
@@ -64,6 +69,8 @@ public class LoginActivity extends AppCompatActivity {
                             public void onSuccess(AuthResult authResult) {
                                 Toast.makeText(LoginActivity.this, "Log in success!", Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                                lottieProgressBar.setVisibility(View.GONE);
+                                lottieProgressBar.stopAnimation();
                                 finish();
                             }
                         })

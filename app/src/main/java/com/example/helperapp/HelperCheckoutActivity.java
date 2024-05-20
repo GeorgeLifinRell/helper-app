@@ -36,6 +36,8 @@ public class HelperCheckoutActivity extends AppCompatActivity {
     private AppCompatImageButton increaseHoursNeededBtn;
     private MaterialButton checkoutBtn;
     private final double PLATFORM_FEE = 0.05;
+    private final int MIN_HOURS_NEEDED = 1;
+    private final int MAX_HOURS_NEEDED = 12;
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
@@ -89,7 +91,7 @@ public class HelperCheckoutActivity extends AppCompatActivity {
         helperNameValueTV.setText(helperName);
         helperFarePerHourValueTV.setText(helperFarePerHour);
         hoursNeededValueTV.setText("1");
-
+        updateInitialUI();
         decreaseHoursNeededBtn.setOnClickListener(this::updateHoursNeededAndTotalFareValue);
         increaseHoursNeededBtn.setOnClickListener(this::updateHoursNeededAndTotalFareValue);
 
@@ -128,11 +130,18 @@ public class HelperCheckoutActivity extends AppCompatActivity {
         double helperFarePerHour = Double.parseDouble(helperFarePerHourValueTV.getText().toString());
 
         if (view.getId() == R.id.decrease_hours_needed_img_btn) {
-            hoursNeeded = (hoursNeeded > 1) ? hoursNeeded - 1 : hoursNeeded;
+            hoursNeeded = (hoursNeeded > MIN_HOURS_NEEDED) ? hoursNeeded - 1 : hoursNeeded;
         } else if (view.getId() == R.id.increase_hours_needed_img_btn) {
-            hoursNeeded += 1;
+            hoursNeeded = (hoursNeeded < MAX_HOURS_NEEDED) ? hoursNeeded + 1 : hoursNeeded;
         }
         hoursNeededValueTV.setText(String.valueOf(hoursNeeded));
+        platformFeeValueTV.setText(String.valueOf(helperFarePerHour * hoursNeeded * PLATFORM_FEE));
+        totalFareValueTV.setText(String.valueOf(hoursNeeded * helperFarePerHour * (1 + PLATFORM_FEE)));
+    }
+
+    private void updateInitialUI() {
+        int hoursNeeded = Integer.parseInt(hoursNeededValueTV.getText().toString());
+        double helperFarePerHour = Double.parseDouble(helperFarePerHourValueTV.getText().toString());
         platformFeeValueTV.setText(String.valueOf(helperFarePerHour * hoursNeeded * PLATFORM_FEE));
         totalFareValueTV.setText(String.valueOf(hoursNeeded * helperFarePerHour * (1 + PLATFORM_FEE)));
     }

@@ -2,189 +2,25 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".DriverSelectionActivity">
 
-    <androidx.cardview.widget.CardView
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_driver_selection"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginTop="24dp"
-        app:cardCornerRadius="50dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="24dp">
-
-            <ImageView
-                android:id="@+id/driver_image_view"
-                android:layout_width="200dp"
-                android:layout_height="150dp"
-                android:contentDescription="Driver image"
-                android:src="@drawable/driver_image_1"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.1" />
-
-            <TextView
-                android:id="@+id/driver_name_label_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Name: "
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintTop_toBottomOf="@id/driver_image_view"
-                app:layout_constraintLeft_toLeftOf="parent"/>
-
-            <TextView
-                android:id="@+id/driver_name_value_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Yogesh"
-                android:textSize="20sp"
-                app:layout_constraintBottom_toBottomOf="@+id/driver_name_label_tv"
-                app:layout_constraintLeft_toRightOf="@id/driver_name_label_tv"
-                app:layout_constraintTop_toBottomOf="@id/driver_image_view" />
-
-            <TextView
-                android:id="@+id/driver_fare_label_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Fare per hour: "
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/driver_name_label_tv" />
-
-            <TextView
-                android:id="@+id/driver_fare_value_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Rs.250"
-                android:textSize="20sp"
-                app:layout_constraintBottom_toBottomOf="@+id/driver_fare_label_tv"
-                app:layout_constraintLeft_toRightOf="@id/driver_fare_label_tv"
-                app:layout_constraintTop_toTopOf="@+id/driver_fare_label_tv" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/driver_fare_label_tv">
-
-
-                <TextView
-                    android:id="@+id/hours_needed_label_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Hours needed:"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <androidx.appcompat.widget.AppCompatImageButton
-                    android:id="@+id/decrease_hours_needed_img_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/baseline_expand_more_24"
-                    android:backgroundTint="@color/white"
-                    app:layout_constraintLeft_toRightOf="@id/hours_needed_label_tv"
-                    app:layout_constraintTop_toTopOf="@+id/hours_needed_label_tv"
-                    app:layout_constraintBottom_toBottomOf="@id/hours_needed_label_tv"/>
-
-                <TextView
-                    android:id="@+id/hours_needed_value_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:gravity="center"
-                    android:text="0"
-                    android:textStyle="bold"
-                    android:textSize="20sp"
-                    app:layout_constraintStart_toEndOf="@+id/decrease_hours_needed_img_btn"
-                    app:layout_constraintTop_toTopOf="@+id/decrease_hours_needed_img_btn"
-                    app:layout_constraintBottom_toBottomOf="@id/decrease_hours_needed_img_btn"/>
-
-                <androidx.appcompat.widget.AppCompatImageButton
-                    android:id="@+id/increase_hours_needed_img_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/baseline_expand_less_24"
-                    android:backgroundTint="@color/white"
-                    app:layout_constraintStart_toEndOf="@+id/hours_needed_value_tv"
-                    app:layout_constraintTop_toTopOf="@+id/hours_needed_label_tv"
-                    app:layout_constraintBottom_toBottomOf="@id/hours_needed_label_tv"/>
-
-                <TextView
-                    android:id="@+id/platform_fee_label_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Platform fee (1%): "
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/hours_needed_label_tv"/>
-
-                <TextView
-                    android:id="@+id/platform_fee_value_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="\tfree"
-                    app:layout_constraintStart_toEndOf="@+id/platform_fee_label_tv"
-                    app:layout_constraintTop_toTopOf="@+id/platform_fee_label_tv"
-                    app:layout_constraintBottom_toBottomOf="@+id/platform_fee_label_tv"/>
-
-                <TextView
-                    android:id="@+id/total_fare_label_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Total Cost:"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/platform_fee_label_tv"/>
-
-                <TextView
-                    android:id="@+id/total_fare_value_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:text="0"
-                    android:textSize="20sp"
-                    android:gravity="center"
-                    app:layout_constraintLeft_toRightOf="@+id/total_fare_label_tv"
-                    app:layout_constraintTop_toTopOf="@id/total_fare_label_tv"
-                    app:layout_constraintBottom_toBottomOf="@+id/total_fare_label_tv"/>
-
-                <com.google.android.material.button.MaterialButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="Call Genie Now!"
-                    android:textColor="@color/teal"
-                    android:textSize="22sp"
-                    android:backgroundTint="@color/white"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/total_fare_label_tv" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
-
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/driver_selection_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_driver_selection" />
 </androidx.constraintlayout.widget.ConstraintLayout>
