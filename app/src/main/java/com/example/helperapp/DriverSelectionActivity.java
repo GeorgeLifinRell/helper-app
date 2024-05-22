@@ -58,25 +58,25 @@ public class DriverSelectionActivity extends AppCompatActivity {
 
     private void fetchDrivers() {
         db.collection("/helper-profile").whereEqualTo("jobTitle", "driver")
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @SuppressLint("NotifyDataSetChanged")
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                        if (error != null) {
-                            Log.e("MainActivity", "Error fetching data", error);
-                            Toast.makeText(DriverSelectionActivity.this, "Error fetching data", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                        driverList.clear();
-                        assert value != null;
-                        for (DocumentSnapshot document : value.getDocuments()) {
-                            Helper driver = document.toObject(Helper.class);
-                            assert driver != null;
-                            driver.setId(document.getId());
-                            driverList.add(driver);
-                        }
-                        driverAdapter.notifyDataSetChanged();
+            .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                @SuppressLint("NotifyDataSetChanged")
+                @Override
+                public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                    if (error != null) {
+                        Log.e("MainActivity", "Error fetching data", error);
+                        Toast.makeText(DriverSelectionActivity.this, "Error fetching data", Toast.LENGTH_SHORT).show();
+                        return;
                     }
-                });
+                    driverList.clear();
+                    assert value != null;
+                    for (DocumentSnapshot document : value.getDocuments()) {
+                        Helper driver = document.toObject(Helper.class);
+                        assert driver != null;
+                        driver.setId(document.getId());
+                        driverList.add(driver);
+                    }
+                    driverAdapter.notifyDataSetChanged();
+                }
+            });
     }
 }

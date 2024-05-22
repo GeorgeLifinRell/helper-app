@@ -1,8 +1,10 @@
 package com.example.helperapp;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -80,6 +82,7 @@ public class HelperCheckoutActivity extends AppCompatActivity {
         decreaseHoursNeededBtn = findViewById(R.id.decrease_hours_needed_img_btn);
         increaseHoursNeededBtn = findViewById(R.id.increase_hours_needed_img_btn);
         checkoutBtn = findViewById(R.id.genie_checkout_btn);
+        Button sendBidBtn = findViewById(R.id.send_bid_btn);
 
         // Extract all the data from the previous activity
         Intent previousIntent = getIntent();
@@ -123,16 +126,35 @@ public class HelperCheckoutActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        sendBidBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HelperCheckoutActivity.this, SendBidActivity.class);
+                intent.putExtra("helperFarePerHour", helperFarePerHour);
+                startActivity(intent);
+            }
+        });
     }
 
-    private void updateHoursNeededAndTotalFareValue(View view) {
+    private void updateHoursNeededAndTotalFareValue(@NonNull View view) {
         int hoursNeeded = Integer.parseInt(hoursNeededValueTV.getText().toString());
         double helperFarePerHour = Double.parseDouble(helperFarePerHourValueTV.getText().toString());
 
         if (view.getId() == R.id.decrease_hours_needed_img_btn) {
-            hoursNeeded = (hoursNeeded > MIN_HOURS_NEEDED) ? hoursNeeded - 1 : hoursNeeded;
+//            hoursNeeded = (hoursNeeded > MIN_HOURS_NEEDED) ? hoursNeeded - 1 : hoursNeeded;
+            if (hoursNeeded > MIN_HOURS_NEEDED) {
+                hoursNeeded -= 1;
+            } else {
+                Toast.makeText(this, "Minimum hours can be reserved is 1", Toast.LENGTH_SHORT).show();
+            }
         } else if (view.getId() == R.id.increase_hours_needed_img_btn) {
-            hoursNeeded = (hoursNeeded < MAX_HOURS_NEEDED) ? hoursNeeded + 1 : hoursNeeded;
+//            hoursNeeded = (hoursNeeded < MAX_HOURS_NEEDED) ? hoursNeeded + 1 : hoursNeeded;
+            if (hoursNeeded < MAX_HOURS_NEEDED) {
+                hoursNeeded += 1;
+            } else {
+                Toast.makeText(this, "Maximum hours reserved is 12", Toast.LENGTH_SHORT).show();
+            }
         }
         hoursNeededValueTV.setText(String.valueOf(hoursNeeded));
         platformFeeValueTV.setText(String.valueOf(helperFarePerHour * hoursNeeded * PLATFORM_FEE));
@@ -149,18 +171,27 @@ public class HelperCheckoutActivity extends AppCompatActivity {
     private void addBookingToDB(HashMap<String, String> helperBookingDetails) {
         db = FirebaseFirestore.getInstance();
         db.collection("/helper-bookings")
-                .add(helperBookingDetails)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        currentBookingId = documentReference.getId();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(HelperCheckoutActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
+            .add(helperBookingDetails)
+            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                @Override
+                public void onSuccess(DocumentReference documentReference) {
+                    currentBookingId = documentReference.getId();
+                }
+            })
+            .addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(HelperCheckoutActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+    }
+
+    private void sendSms(String phoneNumber, String message) {
+        Intent smsIntent = new Intent(Intent.ACTION_SENDTO);
+        smsIntent.setData(Uri.parse("smsto:" + phoneNumber));
+        smsIntent.putExtra("sms_body", message);
+        if (smsIntent.resolveActivity(getPackageManager()) != null) {
+            startActivity(smsIntent);
+        }
     }
 }
