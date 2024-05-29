@@ -4,12 +4,9 @@ import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.ColorStateList;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
-import android.location.LocationManager;
-import android.location.LocationRequest;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -23,11 +20,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.PopupMenu;
 import androidx.core.app.ActivityCompat;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.appbar.MaterialToolbar;
@@ -39,7 +34,6 @@ import com.google.firebase.auth.FirebaseUser;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 
 public class HomeActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
@@ -98,26 +92,46 @@ public class HomeActivity extends AppCompatActivity {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         TextView homeToolbarTextView = findViewById(R.id.home_toolbar_textview);
         FirebaseUser currentUser = mAuth.getCurrentUser();
-//        if (currentUser != null) {
-//            if (Objects.requireNonNull(currentUser.getDisplayName()).isEmpty()) {
-//                homeToolbarTextView.setText(currentUser.getEmail());
-//            }
-//            else {
-//                homeToolbarTextView.setText(currentUser.getDisplayName());
-//            }
-//        }
-//        homeToolbarTextView.setText(Objects.requireNonNull(mAuth.getCurrentUser()).getDisplayName());
         MaterialToolbar homeToolbar = findViewById(R.id.home_toolbar);
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navbar);
         setSupportActionBar(homeToolbar);
         ImageButton logOutBtn = findViewById(R.id.log_out_img_btn);
         MaterialCardView driverSelectionCard = findViewById(R.id.driver_home_card);
+        MaterialCardView carpenterSelectionCard = findViewById(R.id.carpenter_home_card);
+        MaterialCardView electricianSelectionCard = findViewById(R.id.electrician_home_card);
+        MaterialCardView plumberSelectionCard = findViewById(R.id.plumber_home_card);
+        MaterialCardView joinGenieCard = findViewById(R.id.join_genie_home_card);
+
         getLastKnownLocation();
 
         driverSelectionCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), DriverSelectionActivity.class));
+            }
+        });
+        carpenterSelectionCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), CarpenterSelectionActivity.class));
+            }
+        });
+        electricianSelectionCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), ElectricianSelectionActivity.class));
+            }
+        });
+        plumberSelectionCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), PlumberSelectionActivity.class));
+            }
+        });
+        joinGenieCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), JoinGenieActivity.class));
             }
         });
         logOutBtn.setOnClickListener(new View.OnClickListener() {
