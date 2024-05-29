@@ -7,4 +7,22 @@
     android:layout_height="match_parent"
     tools:context=".CarpenterSelectionActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_carpenter_selection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/carpenter_selection_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_carpenter_selection" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
